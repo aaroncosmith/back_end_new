@@ -21,6 +21,15 @@
         </label><br>
         <button type='submit'>Save Review</button>
 
+        <div class="grid-col grid-col--4"></div>
+          ${commentData.map (comments => {
+          return `<div class="grid-item">
+                      <img class="pinterest" src="${comments.comment}" onerror="this.src='${comments.comment}';" >
+                  </div>
+                  `}).join('')}
+          
+      </div>
+
     </form>
 </div>
 

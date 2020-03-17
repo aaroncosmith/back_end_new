@@ -1,7 +1,8 @@
 const express = require('express'),
 router = express.Router(),
 imageModel = require('../models/imageModel'),
-likesModel = require('../models/likesModel');
+likesModel = require('../models/likesModel'),
+commentData = require('../models/commentsModel');
 
 
 
@@ -11,6 +12,7 @@ router.get('/', async function(req, res, next) {
   const resultData = await imageModel.getProfilePicture(user_id);
   const savedData = await likesModel.getPicturesById(user_id);
   const profileData = await imageModel.getProfilePicture(user_id);
+  const commentData = await commentsModel.getCommentsByImgId(picture_id);
   const howManyLikes = savedData.length;
   // console.log('this is the array length: ', howManyLikes);
   // console.log("this is the user id: ", user_id);
@@ -22,6 +24,7 @@ router.get('/', async function(req, res, next) {
       resultData: resultData,
       savedData: savedData,
       profileData: profileData,
+      commentData: commentData,
       is_logged_in: req.session.is_logged_in,
       name: req.session.name
     },
