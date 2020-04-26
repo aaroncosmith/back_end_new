@@ -1,7 +1,7 @@
 <div class="uploadImg">
-    <h1 class="top">Welcome ${name}</h1>
-    <h3> Upload Your Profile Image</h3>
-    <form action='/profile' method="post" enctype="multipart/form-data">
+    <h1 class="top">${name}</h1>
+    <h3> Upload An Image</h3>
+    <form action='/profile/upload' method="post" enctype="multipart/form-data">
         <input type='file' name='image' />
         <input type="submit" value="upload"/>
       </form>

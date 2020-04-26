@@ -2,7 +2,7 @@ const express = require('express'),
   router = express.Router(),
   bcrypt = require('bcryptjs'),
 usersModel = require('../models/userModel')
-
+imageModel = require('../models/imageModel');
 
 router.get('/login', function (req, res, next) {
   res.render('template', {
@@ -18,7 +18,8 @@ router.get('/login', function (req, res, next) {
 
 router.post("/login", async function(req, res, next) {
   const { email, password } = req.body;
-
+  const user_id = req.session.user_id;
+  const profileData = await imageModel.getProfilePicture(user_id);
   const user = new usersModel(null, null, email, password);
   const loginResponse = await user.userLogin();
   // console.log('login response is', loginResponse);
@@ -36,6 +37,7 @@ router.get('/signup', (req, res) => {
   res.render('template', {
     locals: {
       title: 'Sign Up',
+      
       is_logged_in:req.session.is_logged_in
     },
     partials:{
@@ -54,6 +56,7 @@ router.post('/signup', async (req, res) => {
     res.redirect('/users/login');
   });
 });
+
 
 router.get('/logout', (req,res) => {
   req.session.destroy();

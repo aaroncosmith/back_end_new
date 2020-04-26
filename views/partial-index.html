@@ -5,16 +5,15 @@
             <div class="grid-col grid-col--4"></div>
             ${resultData.map (images => {
             return `<div class="grid-item">
-                        <img class="lazy" data-src="${images.picture}" src="images/placeholder.png" onerror="this.src='${images.picture}';" >
+                    <a id="open" name="picture_id" onclick="window.location.href = '/images/${images.id}';">
+                      <img class="lazy" data-src="${images.picture}" src="images/placeholder.png"  >
+                    </a>
+
                         <div class="overlay">
-                            <button id="open" name="picture_id" onclick="window.location.href = '/images/${images.id}';" class="button is-primary is-inverted has-text-primary">
-                            Open Image
-                            </button>
-                          
-                        <form action="/" method="post">   
+                            <form action="/" method="post">   
                             <input type="hidden" name="name" value="${images.picture}">        
-                            <button id="like" type="submit" class="button is-primary is-inverted">
-                            Like
+                            <button id="like" type="submit" class="button">
+                            <img src="images/love.png" class="love">
                             </button>
                         </form>
                         </div>

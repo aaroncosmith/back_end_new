@@ -48,6 +48,21 @@ else if (resultData[0] == undefined && user_id != undefined) {
 });
 
 
+  router.get('/newUser', function (req, res, next) {
+
+    res.render('template', {
+      locals: {
+        title: 'Upload User Photo',
+        name: req.session.name,
+        is_logged_in: req.session.is_logged_in
+      },
+      partials: {
+        partial: 'partial-profile-upload'
+      }
+    });
+  });
+
+
 
 router.post("/", async function(req, res){
   if(req.files) {
@@ -58,6 +73,45 @@ router.post("/", async function(req, res){
       const user_id = req.session.user_id;      
       const profilePic = new imageModel(null, picture, user_id); 
       profilePic.userPicture();   
+      // console.log(req.session.user_id);
+      file.mv("./public/images/"+filename,function(err){
+          if(err) {
+              console.log(err)
+              res.send("error occured")   
+              res.redirect('/profile')            
+          }      
+          else { 
+            res.redirect('/profile');
+          }
+      })
+  }
+})
+
+router.get('/upload', async function (req, res, next) {
+  const user_id = req.session.user_id;
+  const profileData = await imageModel.getProfilePicture(user_id);
+  res.render('template', {
+    locals: {
+      title: 'Image Upload',
+      profileData: profileData,
+      name: req.session.name,
+      is_logged_in: req.session.is_logged_in
+    },
+    partials: {
+      partial: 'partial-upload'
+    }
+  });
+});
+
+router.post("/upload", async function(req, res){
+  if(req.files) {
+      const file = req.files.image,
+      filename = file.name;
+      // console.log(filename) 
+      const picture = "/images/"+filename;   
+      const user_id = req.session.user_id;      
+      const uploadPicture = new imageModel(null, picture, user_id); 
+      uploadPicture.postPicture();   
       // console.log(req.session.user_id);
       file.mv("./public/images/"+filename,function(err){
           if(err) {

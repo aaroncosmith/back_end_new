@@ -1,7 +1,7 @@
 const db = require("./conn");
 
 
-class PictureReviewModel{
+class UploadsModel{
   constructor(id, picture, user_id) {
     this.id = id;
     this.picture = picture;
@@ -62,31 +62,15 @@ return response
     }
   }
 
-  static async getProfilePicture(user_id) {
+  static async getUploadedPicture(user_id) {
     try {
       // const user_id = this.user_id;
-      const response = await db.any(`SELECT picture FROM profile_pictures WHERE user_id = ${user_id};`);
+      const response = await db.any(`SELECT picture FROM images WHERE user_id = ${user_id};`);
       return response;
     } catch (error) {
       console.error("ERROR: ", error);
       return error;
     }
-  }
-
-  static async getSavedPicture() {
-    try {
-      // const user_id = this.user_id;
-      const response = await db.any(`SELECT * FROM images;`);
-      return response;
-    } catch (error) {
-      console.error("ERROR: ", error);
-      return error;
-    }
-  }
-
-static async hello1() {
-    const response = await console.log('yooo');
-    return response;
   }
 
   async postPicture() {
@@ -103,4 +87,5 @@ static async hello1() {
 
 }
 
-module.exports = PictureReviewModel;
+
+module.exports = UploadsModel;
